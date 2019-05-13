@@ -8,7 +8,9 @@ import { HttpClient } from '@angular/common/http';
 })
 export class StuffService {
 
-  constructor(private http: HttpClient) {}
+    uri = 'http://localhost:3000/api/all-stuff';
+
+    constructor(private http: HttpClient) {}
 
   private stuff: Thing[] = [
     {
@@ -31,7 +33,7 @@ export class StuffService {
   public stuff$ = new Subject<Thing[]>();
 
   getStuff() {
-    this.http.get('http://localhost:3000/api/stuff').subscribe(
+    this.http.get(this.uri).subscribe(
       (stuff: Thing[]) => {
         if (stuff) {
           this.stuff = stuff;
@@ -50,7 +52,7 @@ export class StuffService {
 
   getThingById(id: string) {
     return new Promise((resolve, reject) => {
-      this.http.get('http://localhost:3000/api/stuff/' + id).subscribe(
+      this.http.get('http://localhost:3000/api/all-stuff/' + id).subscribe(
         (response) => {
           resolve(response);
         },
@@ -63,7 +65,7 @@ export class StuffService {
 
   createNewThing(thing: Thing) {
     return new Promise((resolve, reject) => {
-      this.http.post('http://localhost:3000/api/stuff', thing).subscribe(
+      this.http.post(this.uri, thing).subscribe(
         (response) => {
           resolve(response);
         },
@@ -79,7 +81,7 @@ export class StuffService {
       const thingData = new FormData();
       thingData.append('thing', JSON.stringify(thing));
       thingData.append('image', image, thing.title);
-      this.http.post('http://localhost:3000/api/stuff', thingData).subscribe(
+      this.http.post(this.uri, thingData).subscribe(
         (response) => {
           resolve(response);
         },
@@ -92,7 +94,7 @@ export class StuffService {
 
   modifyThing(id: string, thing: Thing) {
     return new Promise((resolve, reject) => {
-      this.http.put('http://localhost:3000/api/stuff/' + id, thing).subscribe(
+      this.http.put(this.uri + id, thing).subscribe(
         (response) => {
           resolve(response);
         },
@@ -114,7 +116,7 @@ export class StuffService {
         thingData.append('thing', JSON.stringify(thing));
         thingData.append('image', image, thing.title);
       }
-      this.http.put('http://localhost:3000/api/stuff/' + id, thingData).subscribe(
+      this.http.put(this.uri + id, thingData).subscribe(
         (response) => {
           resolve(response);
         },
@@ -127,7 +129,7 @@ export class StuffService {
 
   deleteThing(id: string) {
     return new Promise((resolve, reject) => {
-      this.http.delete('http://localhost:3000/api/stuff/' + id).subscribe(
+      this.http.delete(this.uri + id).subscribe(
         (response) => {
           resolve(response);
         },

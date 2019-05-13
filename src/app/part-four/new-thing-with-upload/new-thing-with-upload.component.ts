@@ -66,7 +66,7 @@ export class NewThingWithUploadComponent implements OnInit {
     const reader = new FileReader();
     reader.onload = () => {
       if (this.thingForm.get('image').valid) {
-        this.imagePreview = reader.result;
+        this.imagePreview = <string>reader.result;
       } else {
         this.imagePreview = null;
       }
