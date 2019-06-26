@@ -16,7 +16,7 @@ import { ModifyThingComponent } from './part-one/modify-thing/modify-thing.compo
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressSpinnerModule } from '@angular/material';
 import { LoginComponent } from './part-three/auth/login/login.component';
-import { SignupComponent } from './part-three/auth/signup/signup.component';
+import { SignupComponent } from './part-four/auth/signup/signup.component'; /* CORRECTION 26 juin 2019*/
 import { NewThingWithUploadComponent } from './part-four/new-thing-with-upload/new-thing-with-upload.component';
 import { ModifyThingWithUploadComponent } from './part-four/modify-thing-with-upload/modify-thing-with-upload.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';

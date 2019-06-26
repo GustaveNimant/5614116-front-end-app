@@ -8,12 +8,16 @@ import { Router } from '@angular/router';
 })
 export class DefaultComponent implements OnInit {
 
-  constructor(private router: Router) { }
+    constructor(private router: Router) {
+	// console.log('Entering in constructor')
+    }
 
-  ngOnInit() {
-  }
-
-  onNavigate(endpoint: string) {
-    this.router.navigate([endpoint]);
-  }
+    ngOnInit() {
+	// console.log('Entering in ngOnInit')
+    }
+    
+    onNavigate(endpoint: string) {
+	// console.log('Entering in onNavigate with endpoint ', endpoint)
+	this.router.navigate([endpoint]);
+    }
 }

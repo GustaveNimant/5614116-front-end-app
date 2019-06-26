@@ -9,18 +9,19 @@ import { AuthService } from '../services/auth.service';
 })
 export class PartThreeComponent implements OnInit, OnDestroy {
 
-  constructor(private state: StateService,
-              private auth: AuthService) { }
-
-  ngOnInit() {
-    this.auth.isAuth$.next(false);
-    this.auth.userId = '';
-    this.auth.token = '';
-    this.state.part$.next(3);
-    this.state.part = 3;
-  }
-
-  ngOnDestroy() {
-  }
-
+    constructor(private state: StateService,
+		private auth: AuthService) { }
+    
+    ngOnInit() {
+	this.auth.isAuth$.next(false);
+	this.auth.userId = '';
+	this.auth.token = '';
+	
+	this.state.part$.next(3);
+	this.state.part = 3;
+    }
+    
+    ngOnDestroy() {
+    }
+    
 }

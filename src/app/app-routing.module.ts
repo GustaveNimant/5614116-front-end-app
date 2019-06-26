@@ -1,16 +1,16 @@
-import { NgModule } from '@angular/core';
+import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PartOneComponent } from './part-one/part-one.component';
-import { PartThreeComponent } from './part-three/part-three.component';
-import { PartFourComponent } from './part-four/part-four.component';
-import { DefaultComponent } from './default/default.component';
-import { StuffListComponent } from './part-one/stuff-list/stuff-list.component';
-import { NewThingComponent } from './part-one/new-thing/new-thing.component';
+import { PartOneComponent }     from './part-one/part-one.component';
+import { PartThreeComponent }   from './part-three/part-three.component';
+import { PartFourComponent }    from './part-four/part-four.component';
+import { DefaultComponent }     from './default/default.component';
+import { StuffListComponent }   from './part-one/stuff-list/stuff-list.component';
+import { NewThingComponent }    from './part-one/new-thing/new-thing.component';
 import { SingleThingComponent } from './part-one/single-thing/single-thing.component';
 import { ModifyThingComponent } from './part-one/modify-thing/modify-thing.component';
-import { LoginComponent } from './part-three/auth/login/login.component';
-import { SignupComponent } from './part-three/auth/signup/signup.component';
-import { AuthGuard } from './services/auth-guard.service';
+import { LoginComponent }       from './part-three/auth/login/login.component';
+import { SignupComponent }      from './part-four/auth/signup/signup.component'; /* 26 Juin 2019 */
+import { AuthGuard }            from './services/auth-guard.service';
 import { NewThingWithUploadComponent } from './part-four/new-thing-with-upload/new-thing-with-upload.component';
 import { ModifyThingWithUploadComponent } from './part-four/modify-thing-with-upload/modify-thing-with-upload.component';
 
@@ -45,7 +45,7 @@ const routes: Routes = [
       { path: 'modify-thing/:id', component: ModifyThingWithUploadComponent, canActivate: [AuthGuard] },
       { path: 'auth/login', component: LoginComponent },
       { path: 'auth/signup', component: SignupComponent },
-      { path: '', pathMatch: 'full', redirectTo: 'auth/login' },
+      { path: '', pathMatch: 'full', redirectTo: 'auth/signup' }, /* CORRECTION */
       { path: '**', redirectTo: 'all-stuff' }
     ]
   },

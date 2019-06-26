@@ -1,130 +1,35 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const config = require('./DB');
+const db_config = require('./models/db_config');
+
+const userRoutes  = require('./routes/user.routes');
+const stuffRoutes = require('./routes/stuff.routes');
 
 const app = express();
 
-const Thing = require('./models/thing');
-
 mongoose.Promise = global.Promise;
 
-mongoose.connect(config.DB, { useNewUrlParser: true })
-    .then(
-	() => {console.log('Database is connected')}
+app.use((req, res, next) => { /* no route : applies to all incoming requests */
+    // 26 Juin 2019    res.setHeader('Access-Control-Allow-Origin', '*'); 
+    res.setHeader('Access-Control-Allow-Origin', '*' always); /* always ajout 26 Juin 2019 */
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+    next();
+});
+
+app.use(bodyParser.json()); /* receive things as a json Object */
+
+app.use('/api/auth', userRoutes); /* user route to /api/auth/login /api/auth/signup */
+app.use('/api/all-stuff', stuffRoutes); /* main route */
+
+mongoose.connect(db_config.DB_URI, { useNewUrlParser: true }) /* asked when launching nodemon */
+    .then( /* Promise */
+	() => {console.log('Database is connected to Uri', db_config.DB_URI)}
     )
     .catch ((error) => {
 	console.log('Can not connect to the database');
-	console.lerror(error);
+	console.error(error);
     });
-
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-  next();
-});
-
-/* receive things as a json Object */
-app.use(bodyParser.json());
-
-app.get('/api/all-stuff/:id', (req, res, next) => {
-/* :id parametrized variable */
-    Thing.findOne({
-	_id: req.params.id
-    }).then(
-	(thing) => {
-	    res.status(200).json(thing);
-	}
-    ).catch(
-	(error) => {
-	    res.status(404).json({
-		error: error
-	    });
-	}
-    );
-});
-
-app.put('/api/all-stuff/:id', (req, res, next) => {
-
-    const thing = new Thing({ /* get fields from req */
-	_id: req.params.id, /* to overwrite the _id */
-	title: req.body.title,
-	description: req.body.description,
-	imageUrl: req.body.imageUrl,
-	price: req.body.price,
-	userId: req.body.userId
-    });
-    
-    Thing.updateOne({_id: req.params.id}, thing).then(
-	() => {
-	    res.status(201).json({
-		message: 'Thing updated successfully!'
-	    });
-	}
-    ).catch(
-	(error) => {
-	    res.status(400).json({
-		error: error
-	    });
-	}
-    );
-});
-
-app.delete('/api/all-stuff/:id', (req, res, next) => {
-
-    Thing.deleteOne({_id: req.params.id}).then(
-	() => {
-	    res.status(200).json({
-		message: 'Deleted!'
-	    });
-	}
-    ).catch(
-	(error) => {
-	    res.status(400).json({
-		error: error
-	    });
-	}
-    );
-});
-
-app.post('/api/all-stuff', (req, res, next) => {
-    
-    const thing = new Thing({ /* _id not needed */
-	title: req.body.title,
-	description: req.body.description,
-	imageUrl: req.body.imageUrl,
-	price: req.body.price,
-	userId: req.body.userId
-    });
-    
-    thing.save().then( /* a promise */
-	() => {
-	    res.status(201).json({
-		message: 'Post saved successfully!'
-	    });
-	}
-    ).catch(
-	(error) => {
-	    res.status(400).json({
-		error: error
-	    });
-	}
-    );
-});
-
-app.use('/api/all-stuff', (req, res, next) => {
-  Thing.find().then( /* returns a promise */
-    (things) => {
-      res.status(200).json(things);
-    }
-  ).catch(
-    (error) => {
-      res.status(400).json({
-        error: error
-      });
-    }
-  );
-});
 
 module.exports = app;

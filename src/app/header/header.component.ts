@@ -5,69 +5,78 @@ import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.scss']
 })
+
 export class HeaderComponent implements OnInit, OnDestroy {
 
-  public mode: string;
-  public part: number;
-  public partString: string;
-  public isAuth: boolean;
+    public mode: string;
+    public part: number;
+    public partString: string;
+    public isAuth: boolean;
 
-  private modeSub: Subscription;
-  private partSub: Subscription;
-  private isAuthSub: Subscription;
+    private modeSub: Subscription;
+    private partSub: Subscription;
+    private isAuthSub: Subscription;
 
-  constructor(private state: StateService,
-              private auth: AuthService,
-              private router: Router) { }
+    constructor(private state: StateService,
+		private auth: AuthService,
+		private router: Router) { 
+	// ICI console.log('Entering in constructor');
+    };
+    
+    ngOnInit() {
+	console.log('Entering in ngOnInit');
+	this.modeSub = this.state.mode$.subscribe(
+	    (mode) => {
+		console.log('ngOnInit mode is', mode);
+		this.mode = mode;
+	    }
+	);
+	this.partSub = this.state.part$.subscribe(
+	    (part) => {
+		console.log('ngOnInit part is', part);
+		this.part = part;
+		switch (part) {
+		    case 1:
+			this.partString = 'part-one';
+			break;
+		    case 3:
+			this.partString = 'part-three';
+			break;
+		    case 4:
+			this.partString = 'part-four';
+			break;
+		    default:
+			break;
+		}
+	    }
+	);
+	this.isAuthSub = this.auth.isAuth$.subscribe(
+	    (auth) => {
+		this.isAuth = auth;
+	    }
+	);
+    }
 
-  ngOnInit() {
-    this.modeSub = this.state.mode$.subscribe(
-      (mode) => {
-        this.mode = mode;
-      }
-    );
-    this.partSub = this.state.part$.subscribe(
-      (part) => {
-        this.part = part;
-        switch (part) {
-          case 1:
-            this.partString = 'part-one';
-            break;
-          case 3:
-            this.partString = 'part-three';
-            break;
-          case 4:
-            this.partString = 'part-four';
-            break;
-          default:
-            break;
-        }
-      }
-    );
-    this.isAuthSub = this.auth.isAuth$.subscribe(
-      (auth) => {
-        this.isAuth = auth;
-      }
-    );
-  }
-
-  onLogout() {
-    this.auth.logout();
-    this.router.navigate(['/' + this.partString +'/auth/login']);
-  }
-
-  onBackToParts() {
-    this.router.navigate(['/default']);
-  }
-
-  ngOnDestroy() {
-    this.modeSub.unsubscribe();
-    this.partSub.unsubscribe();
-    this.isAuthSub.unsubscribe();
-  }
-
+    onLogout() {
+	console.log('Entering in onLogout partString', this.partString);
+	this.auth.logout();
+	this.router.navigate(['/' + this.partString +'/auth/login']);
+    }
+    
+    onBackToParts() {
+	console.log('Entering in onBackToParts');
+	this.router.navigate(['/default']);
+    }
+    
+    ngOnDestroy() {
+	// console.log('Entering in ngOnDestroy');
+	this.modeSub.unsubscribe();
+	this.partSub.unsubscribe();
+	this.isAuthSub.unsubscribe();
+    }
+    
 }

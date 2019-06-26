@@ -1,0 +1,18 @@
+Blocage d’une requête multiorigines (Cross-Origin Request) : la politique « Same Origin » ne permet pas de consulter la ressource distante située sur http://localhost:3000/api/all-stuff5ce43aed226f0926643573ce. Raison : échec du canal de pré-vérification des requêtes CORS.
+ERROR
+
+truc
+emile.achad@free.fr
+SIGNUP password_hash is  $2b$10$d63V8GFM3YQyZCmfwODVJuKgEpUs8osfMTHhhpIoVeo0Y1twIqrIO
+
+truc
+emile.assad@free.fr
+SIGNUP password_hash is  $2b$10$tJSFudyjqe9YMt6j1sv7/u/96pF/tulFbwtX1jDCvZG.YE9YXy6wO
+
+truc
+pierre.assad@free.fr
+SIGNUP password_hash is  $2b$10$9EVRm/iP.4lWKbpwtEobBO228MWUu.D2YxBrTaXCebL7LhNu44Iyy
+
+truc
+jean.houtisse@free.fr
+SIGNUP password_hash is  $2b$10$7FDIU03Nw0e7Kshr5DV1R.k1FSaimdWhSEvDcSfwKRMUo.v/CW7.O

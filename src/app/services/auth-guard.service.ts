@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { StateService } from './state.service';
 
 @Injectable()
+
 export class AuthGuard implements CanActivate {
 
   constructor(private auth: AuthService,
@@ -21,7 +22,7 @@ export class AuthGuard implements CanActivate {
                   if (part === 3) {
                     this.router.navigate(['/part-three/auth/login']);
                   } else if (part === 4) {
-                    this.router.navigate(['/part-four/auth/login']);
+                    this.router.navigate(['/part-four/auth/signup']);
                   }
                 }
               );
